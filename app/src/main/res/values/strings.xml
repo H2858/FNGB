@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Fruit Ninja Bot</string>
+    <string name="accessibility_service_description">Fruit Ninja Bot accessibility service for automated fruit slicing gestures.</string>
+</resources>

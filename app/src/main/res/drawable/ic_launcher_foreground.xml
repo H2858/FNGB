@@ -1,0 +1,26 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Watermelon Rind (Green) -->
+    <path
+        android:fillColor="#00E676"
+        android:pathData="M24,54 A30,30 0 0,0 84,54 Z" />
+    <!-- Watermelon Flesh (Crimson Red) -->
+    <path
+        android:fillColor="#FF5252"
+        android:pathData="M28,54 A26,26 0 0,0 80,54 Z" />
+    <!-- Seeds -->
+    <path
+        android:fillColor="#111111"
+        android:pathData="M44,62 A2,2 0 1,1 44,61.9 Z M54,66 A2,2 0 1,1 54,65.9 Z M64,62 A2,2 0 1,1 64,61.9 Z" />
+    <!-- Katana Blade Slash Trail -->
+    <path
+        android:fillColor="#40C4FF"
+        android:pathData="M18,22 L90,86 L86,88 L14,24 Z" />
+    <!-- White Slash Gint -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M24,28 L84,82 L82,83 L22,29 Z" />
+</vector>
