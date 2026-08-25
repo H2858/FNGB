@@ -18,6 +18,7 @@ import android.os.Build
 import android.os.IBinder
 import android.util.DisplayMetrics
 import android.util.Log
+import android.view.WindowManager
 import androidx.core.app.NotificationCompat
 import com.example.bot.BotManager
 import com.example.bot.YoloV8NcnnDetector
