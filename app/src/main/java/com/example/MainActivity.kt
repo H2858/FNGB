@@ -103,11 +103,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         try {
-            // Safe initial check for BotManager setup
-            BotManager.init(applicationContext)
+            BotManager.resetStats()
         } catch (e: Throwable) {
-            Log.e("MainActivity", "Error initializing BotManager: ${e.localizedMessage}")
-            Toast.makeText(this, "Init Warning: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
+            Log.e("MainActivity", "Error during startup: ${e.localizedMessage}")
         }
 
         setContent {
