@@ -5,6 +5,7 @@
     <!-- Permissions for Screen Capture, Floating Overlay, Foreground Services, and Gestures -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" tools:ignore="SystemPermissionTypo" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -47,12 +48,14 @@
         <!-- MediaProjection Frame Capture Service -->
         <service
             android:name="com.example.ScreenCaptureService"
-            android:foregroundServiceType="mediaProjection"
-            android:exported="false" />
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="mediaProjection" />
 
         <!-- Floating UI Overlay Service -->
         <service
             android:name="com.example.OverlayService"
+            android:enabled="true"
             android:exported="false" />
 
     </application>
