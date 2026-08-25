@@ -8,7 +8,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.bot.BotManager
 
@@ -25,26 +24,8 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate()
+        super.onCreate(savedInstanceState)
         
-        checkPermissions()
-
-        setContent {
-            MainScreen(
-                onLaunchClick = {
-                    val mediaProjectionManager = getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
-                    mediaProjectionLauncher.launch(mediaProjectionManager.createScreenCaptureIntent())
-                },
-                onStopClick = {
-                    ScreenCaptureService.stopService(this)
-                    val overlayIntent = Intent(this, OverlayService::class.java)
-                    stopService(overlayIntent)
-                }
-            )
-        }
-    }
-
-    private fun checkPermissions() {
         if (!Settings.canDrawOverlays(this)) {
             val intent = Intent(
                 Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
@@ -52,5 +33,8 @@ class MainActivity : ComponentActivity() {
             )
             startActivity(intent)
         }
+
+        val mediaProjectionManager = getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
+        mediaProjectionLauncher.launch(mediaProjectionManager.createScreenCaptureIntent())
     }
 }
