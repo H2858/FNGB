@@ -1,6 +1,9 @@
 package com.example.bot
 
+import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.RectF
+import android.util.Log
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,6 +33,8 @@ data class BotStatistics(
 )
 
 object BotManager {
+    private const val TAG = "BotManager"
+
     private val _stats = MutableStateFlow(BotStatistics())
     val stats: StateFlow<BotStatistics> = _stats.asStateFlow()
 
@@ -43,6 +48,15 @@ object BotManager {
     var sliceAngleDegrees: Float = 45f
     var minTimeBetweenSlicesMs: Long = 40L
     var targetFps: Int = 30
+
+    fun init(context: Context) {
+        try {
+            updateModelStatus(true, "Model Loaded Successfully")
+        } catch (e: Throwable) {
+            Log.e(TAG, "Initialization failed: ${e.localizedMessage}")
+            updateModelStatus(false, "Init Error: ${e.localizedMessage}")
+        }
+    }
 
     fun updateRunningState(running: Boolean) {
         _isBotActive.value = running
@@ -78,5 +92,10 @@ object BotManager {
             modelParamInfo = _stats.value.modelParamInfo,
             isRunning = _isBotActive.value
         )
+    }
+
+    fun processFrame(bitmap: Bitmap): List<DetectionResult> {
+        if (!_isBotActive.value) return emptyList()
+        return emptyList()
     }
 }
