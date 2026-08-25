@@ -41,10 +41,6 @@ import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Speed
-import androidx.compose.material.icons.filled.Stop
-import androidx.compose.material.icons.filled.TouchApp
-import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -66,7 +62,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -78,7 +73,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.testTag
@@ -134,7 +128,6 @@ fun FruitNinjaBotScreen() {
     }
     var isMediaProjectionGranted by remember { mutableStateOf(ScreenCaptureService.projectionData != null) }
 
-    // Recheck permissions on resume
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_RESUME) {
@@ -151,7 +144,6 @@ fun FruitNinjaBotScreen() {
         }
     }
 
-    // MediaProjection Result Launcher
     val mediaProjectionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -165,7 +157,6 @@ fun FruitNinjaBotScreen() {
         }
     }
 
-    // Notification Permission Launcher
     val notificationPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted ->
@@ -222,12 +213,10 @@ fun FruitNinjaBotScreen() {
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Hero / Model Status Banner
             item {
                 ModelStatusCard(botStats)
             }
 
-            // Permissions Section
             item {
                 PermissionsCard(
                     isAccessibility = isAccessibilityConnected,
@@ -248,7 +237,6 @@ fun FruitNinjaBotScreen() {
                 )
             }
 
-            // Master Control Action Button
             item {
                 MasterControlSection(
                     isAllReady = isAccessibilityConnected && isOverlayPermissionGranted,
@@ -283,22 +271,18 @@ fun FruitNinjaBotScreen() {
                 )
             }
 
-            // Real-time Statistics HUD
             item {
                 LiveStatsCard(botStats)
             }
 
-            // Bot Configuration Tuners
             item {
                 BotConfigCard()
             }
 
-            // Gesture Test Pad
             item {
                 GestureTestCard(isAccessibilityConnected)
             }
 
-            // Quick Start Guide
             item {
                 QuickStartGuideCard()
             }
@@ -513,9 +497,7 @@ fun MasterControlSection(
                 colors = ButtonDefaults.outlinedButtonColors(contentColor = NinjaPrimary),
                 border = ButtonDefaults.outlinedButtonBorder.copy(brush = Brush.horizontalGradient(listOf(NinjaPrimary, NinjaPrimary)))
             ) {
-                Icon(Icons.Default.Stop, contentDescription = null, tint = NinjaPrimary)
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(text = "STOP BOT SERVICES", fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                Text(text = "🛑 STOP BOT SERVICES", fontWeight = FontWeight.Bold, fontSize = 14.sp, color = NinjaPrimary)
             }
         }
     }
@@ -530,7 +512,7 @@ fun LiveStatsCard(stats: BotStatistics) {
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(Icons.Default.Speed, contentDescription = null, tint = NinjaTertiary, modifier = Modifier.size(20.dp))
+                Text(text = "⚡", fontSize = 18.sp)
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = "Live Bot Telemetry",
@@ -613,7 +595,6 @@ fun BotConfigCard() {
 
             Spacer(modifier = Modifier.height(14.dp))
 
-            // Confidence Slider
             Text(
                 text = "YOLOv8 Detection Confidence: ${(confidence * 100).toInt()}%",
                 fontSize = 13.sp,
@@ -634,7 +615,6 @@ fun BotConfigCard() {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Swipe Speed Slider
             Text(
                 text = "Swipe Duration: ${swipeDuration.toInt()} ms (Faster = Cleaner Slices)",
                 fontSize = 13.sp,
@@ -655,7 +635,6 @@ fun BotConfigCard() {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Slice Length Slider
             Text(
                 text = "Slice Stroke Length: ${sliceLength.toInt()} px",
                 fontSize = 13.sp,
@@ -676,7 +655,6 @@ fun BotConfigCard() {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Angle Selection Chips
             Text(
                 text = "Slice Angle Mode",
                 fontSize = 13.sp,
@@ -723,7 +701,7 @@ fun GestureTestCard(isAccessibilityConnected: Boolean) {
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(Icons.Default.TouchApp, contentDescription = null, tint = NinjaPrimary, modifier = Modifier.size(20.dp))
+                Text(text = "👆", fontSize = 18.sp)
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = "Accessibility Gesture Playground",
