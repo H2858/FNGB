@@ -10,6 +10,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -100,6 +101,15 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        try {
+            // Safe initial check for BotManager setup
+            BotManager.init(applicationContext)
+        } catch (e: Throwable) {
+            Log.e("MainActivity", "Error initializing BotManager: ${e.localizedMessage}")
+            Toast.makeText(this, "Init Warning: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
+        }
+
         setContent {
             MyApplicationTheme {
                 FruitNinjaBotScreen()
@@ -325,7 +335,7 @@ fun ModelStatusCard(stats: BotStatistics) {
                     color = Color.White
                 )
                 Text(
-                    text = if (stats.isModelLoaded) "Model Active: best_ncnn_model (param + bin)" else "Loading assets/best_ncnn_model...",
+                    text = if (stats.isModelLoaded) "Model Active: best_ncnn_model" else "Loading assets/best_ncnn_model...",
                     fontSize = 12.sp,
                     color = if (stats.isModelLoaded) NinjaSecondary else NinjaTertiary
                 )
